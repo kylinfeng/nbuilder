@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nbuilder", "NodeMCU Builder\NodeMCU Builder.vcxproj", "{A31ED934-B482-42F5-9C71-8A2139BEA9F4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nterm", "NodeMCU Terminal\NodeMCU Terminal.vcxproj", "{5A3429B3-9490-4350-8FB7-186A97C91C39}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A31ED934-B482-42F5-9C71-8A2139BEA9F4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A31ED934-B482-42F5-9C71-8A2139BEA9F4}.Debug|Win32.Build.0 = Debug|Win32
+		{A31ED934-B482-42F5-9C71-8A2139BEA9F4}.Release|Win32.ActiveCfg = Release|Win32
+		{A31ED934-B482-42F5-9C71-8A2139BEA9F4}.Release|Win32.Build.0 = Release|Win32
+		{5A3429B3-9490-4350-8FB7-186A97C91C39}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5A3429B3-9490-4350-8FB7-186A97C91C39}.Debug|Win32.Build.0 = Debug|Win32
+		{5A3429B3-9490-4350-8FB7-186A97C91C39}.Release|Win32.ActiveCfg = Release|Win32
+		{5A3429B3-9490-4350-8FB7-186A97C91C39}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

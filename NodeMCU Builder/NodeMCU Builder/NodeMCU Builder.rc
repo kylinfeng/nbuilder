@@ -81,13 +81,6 @@ BEGIN
             MENUITEM "&Open with...\tAlt+L",        IDM_FILE_OPENWITH
             MENUITEM "&Command...\tCtrl+R",         IDM_FILE_RUN
         END
-        POPUP "Node&MCU"
-        BEGIN
-            MENUITEM "&COM Port\tCtrl+Alt+P",       IDM_FILE_COMPORT
-            MENUITEM "&Browse\tCtrl+Alt+B",         IDM_FILE_BROWSE
-            MENUITEM "&Download\tCtrl+Alt+D",       IDM_FILE_DOWNLOAD
-            MENUITEM "&Execute\tAlt+E",             IDM_FILE_EXECUTE
-        END
         MENUITEM SEPARATOR
         POPUP "&Encoding"
         BEGIN
@@ -299,6 +292,17 @@ BEGIN
         MENUITEM "Save Settings On E&xit",      IDM_VIEW_SAVESETTINGS
         MENUITEM "Save Settings &Now\tF7",      IDM_VIEW_SAVESETTINGSNOW
     END
+    POPUP "&NodeMCU"
+    BEGIN
+        POPUP "NodeMCU &Terminal Settings"
+        BEGIN
+            MENUITEM "Select &COM Port\tCtrl+Alt+P", IDM_NODEMCU_COMPORT
+            MENUITEM "Choose &Work Directory",      IDM_NODEMCU_WORKDIR
+        END
+        MENUITEM "&Browse Files\tCtrl+Alt+B",   IDM_NODEMCU_BROWSE
+        MENUITEM "&Download\tCtrl+Alt+D",       IDM_NODEMCU_DOWNLOAD
+        MENUITEM "&Execute\tAlt+E",             IDM_NODEMCU_EXECUTE
+    END
     POPUP "&?"
     BEGIN
         MENUITEM "&About...\tF1",               IDM_HELP_ABOUT
@@ -358,7 +362,7 @@ BEGIN
     "A",            CMD_RELOADANSI,         VIRTKEY, SHIFT, CONTROL, NOINVERT
     "B",            IDM_EDIT_FINDMATCHINGBRACE, VIRTKEY, CONTROL, NOINVERT
     "B",            IDM_EDIT_PADWITHSPACES, VIRTKEY, ALT, NOINVERT
-    "B",            IDM_FILE_BROWSE,        VIRTKEY, CONTROL, ALT, NOINVERT
+    "B",            IDM_NODEMCU_BROWSE,     VIRTKEY, CONTROL, ALT, NOINVERT
     "B",            IDM_EDIT_SELTOMATCHINGBRACE, VIRTKEY, SHIFT, CONTROL, NOINVERT
     "C",            IDM_EDIT_COPY,          VIRTKEY, CONTROL, NOINVERT
     "C",            IDM_EDIT_COPYALL,       VIRTKEY, ALT, NOINVERT
@@ -366,10 +370,10 @@ BEGIN
     "C",            IDM_EDIT_COPYLINE,      VIRTKEY, SHIFT, CONTROL, NOINVERT
     "D",            IDM_EDIT_DUPLICATELINE, VIRTKEY, CONTROL, NOINVERT
     "D",            IDM_EDIT_SELECTIONDUPLICATE, VIRTKEY, ALT, NOINVERT
-    "D",            IDM_FILE_DOWNLOAD,      VIRTKEY, CONTROL, ALT, NOINVERT
+    "D",            IDM_NODEMCU_DOWNLOAD,   VIRTKEY, CONTROL, ALT, NOINVERT
     "D",            IDM_EDIT_DELETELINE,    VIRTKEY, SHIFT, CONTROL, NOINVERT
     "E",            IDM_EDIT_COPYADD,       VIRTKEY, CONTROL, NOINVERT
-    "E",            IDM_FILE_EXECUTE,       VIRTKEY, ALT, NOINVERT
+    "E",            IDM_NODEMCU_EXECUTE,    VIRTKEY, ALT, NOINVERT
     "E",            IDM_EDIT_ESCAPECCHARS,  VIRTKEY, CONTROL, ALT, NOINVERT
     "E",            IDM_EDIT_URLENCODE,     VIRTKEY, SHIFT, CONTROL, NOINVERT
     "F",            IDM_EDIT_FIND,          VIRTKEY, CONTROL, NOINVERT
@@ -403,7 +407,7 @@ BEGIN
     "O",            CMD_RELOADOEM,          VIRTKEY, SHIFT, CONTROL, NOINVERT
     "P",            IDM_FILE_PRINT,         VIRTKEY, CONTROL, NOINVERT
     "P",            IDM_EDIT_COMPRESSWS,    VIRTKEY, ALT, NOINVERT
-    "P",            IDM_FILE_COMPORT,       VIRTKEY, CONTROL, ALT, NOINVERT
+    "P",            IDM_NODEMCU_COMPORT,    VIRTKEY, CONTROL, ALT, NOINVERT
     "P",            CMD_DEFAULTWINPOS,      VIRTKEY, SHIFT, CONTROL, NOINVERT
     "Q",            IDM_EDIT_LINECOMMENT,   VIRTKEY, CONTROL, NOINVERT
     "Q",            IDM_EDIT_ENCLOSESELECTION, VIRTKEY, ALT, NOINVERT
@@ -1386,6 +1390,7 @@ BEGIN
     IDS_WRITEINI_FAIL       "Error writing settings to configuration file."
     IDS_SETTINGSNOTSAVED    "No existing configuration file was found.\nTo keep your style modifications, save settings now (F7) or go back to scheme configuration (Ctrl+F12) and export your styles."
     IDS_EXPORT_FAIL         "Error exporting style settings to ""%s""."
+    IDS_BROWSE_WORKDIR      "Browse work directory for NodeMCU Terminal"
 END
 
 STRINGTABLE

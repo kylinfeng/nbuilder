@@ -4,8 +4,8 @@
 #include "stdafx.h"
 
 
-//#define max(a, b) (a > b ? a : b)
-//#define min(a, b) (a < b ? a : b)
+//#define max(a, b) ((a) > (b) ? (a) : (b))
+//#define min(a, b) ((a) < (b) ? (a) : (b))
 
 typedef BOOL (*PROCESS_LINE_ROUTINE)(char*);
 typedef BOOL (*READ_RESULT_ROUTINE)(char*, int, BOOL);
@@ -31,9 +31,11 @@ LPVOID pIpcCommandBuffer = NULL;
 
 typedef struct _IpcCommand {
 	DWORD dwCmdType;
-	WCHAR cmdParam1[1224];
-	WCHAR cmdParam2[1224];
+	WCHAR cmdParam1[1020];
+	WCHAR cmdParam2[1020];
 } IpcCommand;
+
+DWORD comBaudRate = CBR_9600;
 
 char readEnd[8] = {0};
 
@@ -360,7 +362,7 @@ BOOL InitComm(PCWSTR comName)
 		dcb.DCBlength = sizeof(DCB);
 		if(GetCommState(hCom, &dcb))
 		{
-			dcb.BaudRate = CBR_9600;
+			dcb.BaudRate = comBaudRate;
 			dcb.ByteSize = 8;
 			dcb.Parity = NOPARITY;
 			dcb.StopBits = ONESTOPBIT;
@@ -489,6 +491,11 @@ BOOL InitPull(PCWSTR fileName, PCWSTR folderPath)
 
 void OnCommand(char* inCommand, BOOL echo, char* cheat)
 {
+	if(lstrlenA(inCommand) > sizeof(doCommand))
+	{
+		printf("Error: Command too long.\r\n> ");
+		return;
+	}
 	WaitReply();
 	CommandLock();
 	if(echo)
@@ -633,6 +640,11 @@ DWORD WINAPI IpcWaitThread(LPVOID lparam)
 	return 0;
 }
 
+// .exec pathname
+// .down pathname
+// .pull name
+// .list
+// .quit
 int InteractiveLoop()
 {
 	wchar_t* helpText = L"************************************************************\r\n"
@@ -750,10 +762,12 @@ BOOL InitIpc(PCWSTR comName)
 }
 
 // -com:COM3
-// -exec:path
-// -down:path
+// -baud:9600
+// -exec:pathname
+// -down:pathname
 // -pull:name
 // -list
+// -stay
 BOOL ParseCmdLine(int argc, PWSTR argv[], PWSTR comName, PDWORD cmdType, PWSTR cmdParam)
 {
 	BOOL retVal = FALSE;
@@ -774,7 +788,33 @@ BOOL ParseCmdLine(int argc, PWSTR argv[], PWSTR comName, PDWORD cmdType, PWSTR c
 		{
 			prefix[cur] = argv[idx][cur];
 		}
-		if(!lstrcmpiW(prefix, L"-exec:"))
+		if(!lstrcmpiW(prefix, L"-baud:"))
+		{
+			int baudRate = _wtoi(argv[idx] + 6);
+			switch(baudRate)
+			{
+			case CBR_110:
+			case CBR_300:
+			case CBR_600:
+			case CBR_1200:
+			case CBR_2400:
+			case CBR_4800:
+			case CBR_9600:
+			case CBR_14400:
+			case CBR_19200:
+			case CBR_38400:
+			case CBR_56000:
+			case CBR_57600:
+			case CBR_115200:
+			case CBR_128000:
+			case CBR_256000:
+				comBaudRate = baudRate;
+				break;
+			default:
+				break;
+			}
+		}
+		else if(!lstrcmpiW(prefix, L"-exec:"))
 		{
 			*cmdType |= DO_EXECUTE;
 			lstrcpyW(cmdParam, argv[idx] + 6);
@@ -932,13 +972,13 @@ int _tmain(int argc, _TCHAR* argv[])
 			L"*        nterm -com:COM3 -down:C:\\somepath\\somefile.lua    *\r\n"
 			L"*                                                          *\r\n"
 			L"*    To pull a lua file to your computer:                  *\r\n"
-			L"*         nterm -com:COM3 -pull:somefile.lua               *\r\n"
+			L"*        nterm -com:COM3 -pull:somefile.lua                *\r\n"
 			L"*                                                          *\r\n"
-			L"*    To list the lua files on your nodemcu:                *\r\n"
-			L"*         nterm -com:COM3 -list                            *\r\n"
+			L"*    To list the lua files on your nodemcu, do not quit:   *\r\n"
+			L"*        nterm -com:COM3 -list -stay                       *\r\n"
 			L"*                                                          *\r\n"
-			L"*    You can only specify the COM Port to enter intera-    *\r\n"
-			L"*    ctive mode.                                           *\r\n"
+			L"*    To configure the baud rate of the COM Port:           *\r\n"
+			L"*        nterm -com:COM3 -baud:9600                        *\r\n"
 			L"*                                                          *\r\n"
 			L"************************************************************\r\n";
 		wprintf(L"%s", helpText);

@@ -87,7 +87,7 @@ KEYWORDLIST KeyWords_LUA = {
 "gpio.mode gpio.read gpio.write gpio.serout gpio.trig "
 "i2c.setup i2c.start i2c.stop i2c.address i2c.write i2c.read "
 /*20150701*/"io.close io.flush io.input io.lines io.open io.output io.read io.type io.write " // not implemented in 20150701
-"lu8g.ssd1306_128x64_i2c lu8g.ssd1306_128x64_spi lu8g.pcd8544_84x48 "
+"u8g.ssd1306_128x64_i2c u8g.ssd1306_128x64_spi u8g.pcd8544_84x48 "
 "begin drawBitmap drawBox drawCircle drawDisc drawEllipse drawFilledEllipse drawFrame drawHLine drawLine drawPixel drawRBox drawRFrame drawStr drawStr90 drawStr180 drawStr270 drawTriangle drawVLine drawXBM firstPage getColorIndex getFontAscent getFontDescent getFontLineSpacing getHeight getMode getStrWidth getWidth nextPage setColorIndex setDefaultBackgroundColor setDefaultForegroundColor setFont setFontLineSpacingFactor setFontPosBaseline setFontPosBottom setFontPosCenter setFontPosTop setFontRefHeightAll setFontRefHeightExtendedText setFontRefHeightText setRot90 setRot180 setRot270 setScale2x2 sleepOff sleepOn undoRotation undoScale " //lu8g.display
 "math.abs math.ceil math.floor math.huge math.max math.min math.pi math.pow math.random math.randomseed math.sqrt "
 "mqtt.Client "
@@ -117,7 +117,7 @@ KEYWORDLIST KeyWords_LUA = {
 "dht.OK dht.ERROR_CHECKSUM dht.ERROR_TIMEOUT "
 "gpio.INT gpio.OUTPUT gpio.INPUT gpio.HIGH gpio.LOW gpio.FLOAT gpio.PULLUP "
 "i2c.SLOW i2c.TRANSMITTER i2c.RECEIVER "
-"lu8g.DRAW_UPPER_RIGHT lu8g.DRAW_UPPER_LEFT lu8g.DRAW_LOWER_RIGHT lu8g.DRAW_LOWER_LEFT lu8g.DRAW_ALL lu8g.MODE_BW lu8g.MODE_GRAY2BIT "
+"u8g.DRAW_UPPER_RIGHT u8g.DRAW_UPPER_LEFT u8g.DRAW_LOWER_RIGHT u8g.DRAW_LOWER_LEFT u8g.DRAW_ALL u8g.MODE_BW u8g.MODE_GRAY2BIT "
 "net.TCP net.UDP "
 "node.CPU80MHZ node.CPU160MHZ "
 "spi.MASTER spi.SLAVE spi.CPHA_LOW spi.CPHA_HIGH spi.CPOL_LOW spi.CPOL_HIGH spi.DATABITS_8 spi.DATABITS_16 "

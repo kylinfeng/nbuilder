@@ -43,6 +43,7 @@ extern BOOL bNoEncodingTags;
 extern BOOL bFixLineEndings;
 extern BOOL bAutoStripBlanks;
 extern WCHAR szCurFile[MAX_PATH+40];
+extern WCHAR szNTermWorkDir[MAX_PATH+40];
 extern WCHAR szComName[MAX_PATH+40];
 extern BOOL bRememberCom;
 

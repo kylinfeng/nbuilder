@@ -265,6 +265,8 @@ WCHAR     g_wchWorkingDirectory[MAX_PATH] = L"";
 WCHAR szComName[MAX_PATH+40] = L"";
 BOOL  bRememberCom = FALSE;
 
+WCHAR szNTermWorkDir[MAX_PATH+40] = L"";
+
 
 
 //=============================================================================
@@ -2096,70 +2098,27 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
       break;
 
 
-    case IDM_FILE_COMPORT:
+    case IDM_NODEMCU_COMPORT:
       {
         SelectComPortDlg(hwnd, NULL);
       }
       break;
 
 
-    case IDM_FILE_BROWSE:
+    case IDM_NODEMCU_WORKDIR:
       {
-/*        SHELLEXECUTEINFO sei;
-        WCHAR tchParam[MAX_PATH+4] = L"";
-        WCHAR tchExeFile[MAX_PATH+4];
-        WCHAR tchTemp[MAX_PATH+4];
+        GetDirectory(hwnd, IDS_BROWSE_WORKDIR, szNTermWorkDir, NULL, TRUE);
+      }
+      break;
 
-        if (!IniGetString(L"Settings2",L"filebrowser.exe",L"",tchTemp,COUNTOF(tchTemp))) {
-          if (!SearchPath(NULL,L"metapath.exe",NULL,COUNTOF(tchExeFile),tchExeFile,NULL)) {
-            GetModuleFileName(NULL,tchExeFile,COUNTOF(tchExeFile));
-            PathRemoveFileSpec(tchExeFile);
-            PathAppend(tchExeFile,L"metapath.exe");
-          }
-        }
 
-        else {
-          ExtractFirstArgument(tchTemp,tchExeFile,tchParam);
-          if (PathIsRelative(tchExeFile)) {
-            if (!SearchPath(NULL,tchExeFile,NULL,COUNTOF(tchTemp),tchTemp,NULL)) {
-              GetModuleFileName(NULL,tchTemp,COUNTOF(tchTemp));
-              PathRemoveFileSpec(tchTemp);
-              PathAppend(tchTemp,tchExeFile);
-              lstrcpy(tchExeFile,tchTemp);
-            }
-          }
-        }
-
-        if (lstrlen(tchParam) && lstrlen(szCurFile))
-          StrCatBuff(tchParam,L" ",COUNTOF(tchParam));
-
-        if (lstrlen(szCurFile)) {
-          lstrcpy(tchTemp,szCurFile);
-          PathQuoteSpaces(tchTemp);
-          StrCatBuff(tchParam,tchTemp,COUNTOF(tchParam));
-        }
-
-        ZeroMemory(&sei,sizeof(SHELLEXECUTEINFO));
-
-        sei.cbSize = sizeof(SHELLEXECUTEINFO);
-        sei.fMask = SEE_MASK_FLAG_NO_UI | /*SEE_MASK_NOZONECHECKS*//*0x00800000;
-        sei.hwnd = hwnd;
-        sei.lpVerb = NULL;
-        sei.lpFile = tchExeFile;
-        sei.lpParameters = tchParam;
-        sei.lpDirectory = NULL;
-        sei.nShow = SW_SHOWNORMAL;
-
-        ShellExecuteEx(&sei);
-
-        if ((INT_PTR)sei.hInstApp < 32)
-          MsgBox(MBWARN,IDS_ERR_BROWSE);*/
-
-        //MessageBox(NULL, L"Not implemented yet in this version.", L"NodeMCU Builder", MB_OK);
-
+    case IDM_NODEMCU_BROWSE:
+      {
 		SHELLEXECUTEINFO sei;
         WCHAR tchParam[MAX_PATH+4] = L"";
         WCHAR tchExeFile[MAX_PATH+4];
+        HWND hCmdWnd = FindWindow(NULL, L"C:\\Documents and Settings\\Programmer\\Desktop\\NodeMCU Builder v1.0.3.16(20150916)\\nterm.exe");
+        ShowWindow(hCmdWnd, SW_SHOW);
         GetModuleFileName(NULL,tchExeFile,COUNTOF(tchExeFile));
         PathRemoveFileSpec(tchExeFile);
         PathAppend(tchExeFile,L"nterm.exe");
@@ -2181,7 +2140,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
             sei.lpVerb = NULL;
             sei.lpFile = tchExeFile;
             sei.lpParameters = tchParam;
-            sei.lpDirectory = NULL;
+            sei.lpDirectory = szNTermWorkDir;
             sei.nShow = SW_SHOWNORMAL;
 
             lstrcpyW(tchParam, L"-com:");
@@ -2198,7 +2157,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
       break;
 
 
-    case IDM_FILE_DOWNLOAD:
+    case IDM_NODEMCU_DOWNLOAD:
       {
 		SHELLEXECUTEINFO sei;
         WCHAR tchParam[MAX_PATH+4] = L"";
@@ -2228,7 +2187,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
               sei.lpVerb = NULL;
               sei.lpFile = tchExeFile;
               sei.lpParameters = tchParam;
-              sei.lpDirectory = NULL;
+              sei.lpDirectory = szNTermWorkDir;
               sei.nShow = SW_SHOWNORMAL;
 
               lstrcpyW(tchParam, L"-com:");
@@ -2252,7 +2211,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
       break;
 
 
-    case IDM_FILE_EXECUTE:
+    case IDM_NODEMCU_EXECUTE:
       {
 		SHELLEXECUTEINFO sei;
         WCHAR tchParam[MAX_PATH+4] = L"";
@@ -2282,7 +2241,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
               sei.lpVerb = NULL;
               sei.lpFile = tchExeFile;
               sei.lpParameters = tchParam;
-              sei.lpDirectory = NULL;
+              sei.lpDirectory = szNTermWorkDir;
               sei.nShow = SW_SHOWNORMAL;
 
               lstrcpyW(tchParam, L"-com:");
@@ -4536,24 +4495,24 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
 
 
     case IDT_FILE_BROWSE:
-      if (IsCmdEnabled(hwnd,IDM_FILE_BROWSE))
-        SendMessage(hwnd,WM_COMMAND,MAKELONG(IDM_FILE_BROWSE,1),0);
+      if (IsCmdEnabled(hwnd,IDM_NODEMCU_BROWSE))
+        SendMessage(hwnd,WM_COMMAND,MAKELONG(IDM_NODEMCU_BROWSE,1),0);
       else
         MessageBeep(0);
       break;
 
 
     case IDT_FILE_EXECUTE:
-      if (IsCmdEnabled(hwnd,IDM_FILE_EXECUTE))
-        SendMessage(hwnd,WM_COMMAND,MAKELONG(IDM_FILE_EXECUTE,1),0);
+      if (IsCmdEnabled(hwnd,IDM_NODEMCU_EXECUTE))
+        SendMessage(hwnd,WM_COMMAND,MAKELONG(IDM_NODEMCU_EXECUTE,1),0);
       else
         MessageBeep(0);
       break;
 
 
     case IDT_FILE_DOWNLOAD:
-      if (IsCmdEnabled(hwnd,IDM_FILE_DOWNLOAD))
-        SendMessage(hwnd,WM_COMMAND,MAKELONG(IDM_FILE_DOWNLOAD,1),0);
+      if (IsCmdEnabled(hwnd,IDM_NODEMCU_DOWNLOAD))
+        SendMessage(hwnd,WM_COMMAND,MAKELONG(IDM_NODEMCU_DOWNLOAD,1),0);
       else
         MessageBeep(0);
       break;
@@ -5318,12 +5277,16 @@ void LoadSettings()
 
   bRememberCom = IniSectionGetInt(pIniSection,L"RememberComPort",0);
 
+  IniSectionGetString(pIniSection,L"NTermWorkDir",L"",
+	  szNTermWorkDir,COUNTOF(szNTermWorkDir));
+  if(!PathFileExists(szNTermWorkDir)) szNTermWorkDir[0] = 0;
+
   LoadIniSection(L"Settings2",pIniSection,cchIniSection);
 
   bStickyWinPos = IniSectionGetInt(pIniSection,L"StickyWindowPosition",0);
   if (bStickyWinPos) bStickyWinPos = 1;
 
-  IniSectionGetString(pIniSection,L"DefaultExtension",L"txt",
+  IniSectionGetString(pIniSection,L"DefaultExtension",L"lua",
     tchDefaultExtension,COUNTOF(tchDefaultExtension));
   StrTrim(tchDefaultExtension,L" \t.\"");
 
@@ -5495,6 +5458,7 @@ void SaveSettings(BOOL bSaveSettingsNow)
   {
     IniSectionSetString(pIniSection,L"OpenComPort",L"");
   }
+  IniSectionSetString(pIniSection,L"NTermWorkDir",szNTermWorkDir);
 
   SaveIniSection(L"Settings",pIniSection);
   LocalFree(pIniSection);

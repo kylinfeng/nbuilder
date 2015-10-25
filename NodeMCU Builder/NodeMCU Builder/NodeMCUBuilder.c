@@ -2107,7 +2107,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
 
     case IDM_NODEMCU_WORKDIR:
       {
-        GetDirectory(hwnd, IDS_BROWSE_WORKDIR, szNTermWorkDir, NULL, TRUE);
+        GetDirectory(hwnd, IDS_BROWSE_WORKDIR, szNTermWorkDir, szNTermWorkDir, TRUE);
       }
       break;
 
@@ -2117,15 +2117,11 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
 		SHELLEXECUTEINFO sei;
         WCHAR tchParam[MAX_PATH+4] = L"";
         WCHAR tchExeFile[MAX_PATH+4];
-        HWND hCmdWnd = FindWindow(NULL, L"C:\\Documents and Settings\\Programmer\\Desktop\\NodeMCU Builder v1.0.3.16(20150916)\\nterm.exe");
-        ShowWindow(hCmdWnd, SW_SHOW);
         GetModuleFileName(NULL,tchExeFile,COUNTOF(tchExeFile));
         PathRemoveFileSpec(tchExeFile);
         PathAppend(tchExeFile,L"nterm.exe");
         if(PathFileExists(tchExeFile))
         {
-          //BrowseFileDlg(hwnd, NULL);
-          //break;
           if(lstrlenW(szComName) == 0)
           {
             SelectComPortDlg(hwnd, NULL);
@@ -5277,7 +5273,7 @@ void LoadSettings()
 
   bRememberCom = IniSectionGetInt(pIniSection,L"RememberComPort",0);
 
-  IniSectionGetString(pIniSection,L"NTermWorkDir",L"",
+  IniSectionGetString(pIniSection,L"NTermWorkDirectory",L"",
 	  szNTermWorkDir,COUNTOF(szNTermWorkDir));
   if(!PathFileExists(szNTermWorkDir)) szNTermWorkDir[0] = 0;
 
@@ -5458,7 +5454,7 @@ void SaveSettings(BOOL bSaveSettingsNow)
   {
     IniSectionSetString(pIniSection,L"OpenComPort",L"");
   }
-  IniSectionSetString(pIniSection,L"NTermWorkDir",szNTermWorkDir);
+  IniSectionSetString(pIniSection,L"NTermWorkDirectory",szNTermWorkDir);
 
   SaveIniSection(L"Settings",pIniSection);
   LocalFree(pIniSection);
@@ -6132,7 +6128,7 @@ int CreateIniFileEx(LPCWSTR lpszIniFile) {
     if (hFile != INVALID_HANDLE_VALUE) {
       if (GetFileSize(hFile,NULL) == 0) {
         DWORD dw;
-        WriteFile(hFile,(LPCVOID)L"\xFEFF[NodeMCU Builder]\r\n",26,&dw,NULL);
+        WriteFile(hFile,(LPCVOID)L"\xFEFF[NodeMCU Builder]\r\n",40,&dw,NULL);
       }
       CloseHandle(hFile);
       return(1);

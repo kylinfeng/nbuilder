@@ -16,10 +16,10 @@
 ******************************************************************************/
 
 
-#define VERSION_FILEVERSION_NUM      1,0,3,16
-#define VERSION_FILEVERSION          L"1.0.3.16"
-#define VERSION_FILEVERSION_SHORT    L"1.0.3"
-#define VERSION_FILEVERSION_LONG     L"NodeMCU Builder 1.0.3"
+#define VERSION_FILEVERSION_NUM      1,0,4,23
+#define VERSION_FILEVERSION          L"1.0.4.23"
+#define VERSION_FILEVERSION_SHORT    L"1.0.4"
+#define VERSION_FILEVERSION_LONG     L"NodeMCU Builder 1.0.4"
 #define VERSION_LEGALCOPYRIGHT_SHORT L"Copyright (C) 2015"
 #define VERSION_LEGALCOPYRIGHT_LONG  L"(C) kylinfeng 2015"
 #ifdef _M_AMD64
@@ -29,7 +29,7 @@
 #endif
 #define VERSION_INTERNALNAME         L"NodeMCU Builder"
 #define VERSION_ORIGINALFILENAME     L"nbuilder.exe"
-#define VERSION_PRODUCTVERSION       L"1.0.3.16"
+#define VERSION_PRODUCTVERSION       L"1.0.4.23"
 #define VERSION_AUTHORNAME           L"kylinfeng"
-#define VERSION_WEBPAGEDISPLAY       L"http://www.cnblogs.com/youlin/"
+#define VERSION_WEBPAGEDISPLAY       L"https://github.com/kylinfeng/"
 #define VERSION_EMAILDISPLAY         L"fengyoulin@foxmail.com"

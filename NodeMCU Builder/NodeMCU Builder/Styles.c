@@ -67,6 +67,7 @@ EDITLEXER lexDefault = { SCLEX_NULL, 63000, L"Default Text", L"txt; text; wtx; l
                          { -1, 00000, L"", L"", L"" } } };
 
 
+//20151024
 KEYWORDLIST KeyWords_LUA = {
 //Keywords
 "and break do else elseif end false for function if in local nil not or repeat return then true until while",
@@ -77,27 +78,28 @@ KEYWORDLIST KeyWords_LUA = {
 "bit.bnot bit.band bit.bor bit.bxor bit.lshift bit.rshift bit.arshift bit.bit bit.set bit.clear bit.isset bit.isclear "
 "cjson.encode cjson.decode "
 "coap.Server coap.Client "
-"listen close var func " //coap.server
-"get post put delete " //coap.client
+"listen close var func __gc " //coap_server
+"get post put delete __gc " //coap_client
 "coroutine.create coroutine.resume coroutine.running coroutine.status coroutine.wrap coroutine.yield "
 "crypto.sha1 crypto.toBase64 crypto.toHex crypto.mask crypto.hash crypto.hmac "
-/*20150701*/"debug.debug debug.getfenv debug.gethook debug.getinfo debug.getlocal debug.getregistry debug.getmetatable debug.getupvalue debug.setfenv debug.sethook debug.setlocal debug.setmetatable debug.setupvalue debug.traceback "
+"debug.debug debug.getfenv debug.gethook debug.getinfo debug.getlocal debug.getregistry debug.getmetatable debug.getupvalue debug.setfenv debug.sethook debug.setlocal debug.setmetatable debug.setupvalue debug.traceback "
 "dht.read dht.read11 dht.readxx "
-"file.list file.lines file.open file.close file.write file.writeline file.read file.readline file.format file.remove file.seek file.flush file.rename file.fsinfo "
+"file.list file.open file.close file.write file.writeline file.read file.readline file.format file.remove file.seek file.flush file.rename file.fsinfo "
 "gpio.mode gpio.read gpio.write gpio.serout gpio.trig "
 "i2c.setup i2c.start i2c.stop i2c.address i2c.write i2c.read "
-/*20150701*/"io.close io.flush io.input io.lines io.open io.output io.read io.type io.write " // not implemented in 20150701
-"u8g.ssd1306_128x64_i2c u8g.ssd1306_128x64_spi u8g.pcd8544_84x48 "
-"begin drawBitmap drawBox drawCircle drawDisc drawEllipse drawFilledEllipse drawFrame drawHLine drawLine drawPixel drawRBox drawRFrame drawStr drawStr90 drawStr180 drawStr270 drawTriangle drawVLine drawXBM firstPage getColorIndex getFontAscent getFontDescent getFontLineSpacing getHeight getMode getStrWidth getWidth nextPage setColorIndex setDefaultBackgroundColor setDefaultForegroundColor setFont setFontLineSpacingFactor setFontPosBaseline setFontPosBottom setFontPosCenter setFontPosTop setFontRefHeightAll setFontRefHeightExtendedText setFontRefHeightText setRot90 setRot180 setRot270 setScale2x2 sleepOff sleepOn undoRotation undoScale " //lu8g.display
+"io.close io.flush io.input io.lines io.open io.output io.read io.type io.write "
 "math.abs math.ceil math.floor math.huge math.max math.min math.pi math.pow math.random math.randomseed math.sqrt "
 "mqtt.Client "
-"connect close publish subscribe lwt on " //mqtt.client
+"connect close publish subscribe lwt on __gc " //mqtt.socket
+"connect offline message " //mqtt.socket.on
 "net.createServer net.createConnection net.multicastJoin net.multicastLeave "
 "net.dns.setdnsserver net.dns.getdnsserver net.dns.resolve "
-"listen close on send " //net.server
-"connect close on send hold unhold dns getpeer " //net.socket
+"listen close on send __gc " //net.server
+"receive sent " //net.server.on
+"connect close on send hold unhold dns getpeer __gc " //net.socket
+"connection reconnection disconnection receive sent dns " //net.socket.on
 "node.restart node.dsleep node.info node.chipid node.flashid node.flashsize node.heap node.key node.led node.input node.output node.compile node.setcpufreq node.bootreason "
-/*20150701*/"os.clock os.date os.difftime os.execute os.exit os.getenv os.remove os.rename os.setlocale os.time os.tmpname "
+"os.clock os.date os.difftime os.execute os.exit os.getenv os.remove os.rename os.setlocale os.time os.tmpname "
 "ow.setup ow.reset ow.skip ow.select ow.write ow.write_bytes ow.read ow.read_bytes ow.depower ow.reset_search ow.target_search ow.search ow.crc8 ow.check_crc16 ow.crc16 "
 "pwm.setup pwm.close pwm.start pwm.stop pwm.setclock pwm.getclock pwm.setduty pwm.getduty "
 "rc.send "
@@ -105,23 +107,26 @@ KEYWORDLIST KeyWords_LUA = {
 "string.byte string.char string.dump string.find string.format string.gfind string.gmatch string.gsub string.len string.lower string.match string.rep string.reverse string.sub string.upper "
 "table.concat table.foreach table.foreachi table.getn table.maxn table.insert table.remove table.setn table.sort "
 "tmr.delay tmr.now tmr.wdclr tmr.softwd tmr.time tmr.register tmr.alarm tmr.start tmr.stop tmr.unregister tmr.state tmr.interval "
+"u8g.ssd1306_128x64_i2c u8g.ssd1306_128x64_spi u8g.pcd8544_84x48 "
+"begin drawBitmap drawBox drawCircle drawDisc drawEllipse drawFilledEllipse drawFrame drawHLine drawLine drawPixel drawRBox drawRFrame drawStr drawStr90 drawStr180 drawStr270 drawTriangle drawVLine drawXBM firstPage getColorIndex getFontAscent getFontDescent getFontLineSpacing getHeight getMode getStrWidth getWidth nextPage setColorIndex setDefaultBackgroundColor setDefaultForegroundColor setFont setFontLineSpacingFactor setFontPosBaseline setFontPosBottom setFontPosCenter setFontPosTop setFontRefHeightAll setFontRefHeightExtendedText setFontRefHeightText setRot90 setRot180 setRot270 setScale2x2 sleepOff sleepOn undoRotation undoScale __gc " //u8g.display
 "uart.setup uart.write uart.on "
+"data " //uart.on
 "wifi.sta.getconfig wifi.sta.config wifi.sta.connect wifi.sta.disconnect wifi.sta.autoconnect wifi.sta.getconfig wifi.sta.getip wifi.sta.setip wifi.sta.getbroadcast wifi.sta.getmac wifi.sta.setmac wifi.sta.getap wifi.sta.status "
 "wifi.ap.dhcp.config wifi.ap.dhcp.start wifi.ap.dhcp.stop "
 "wifi.ap.config wifi.ap.getip wifi.ap.setip wifi.ap.getbroadcast wifi.ap.getmac wifi.ap.setmac wifi.ap.getclient "
 "wifi.setmode wifi.getmode wifi.getchannel wifi.setphymode wifi.getphymode wifi.startsmart wifi.stopsmart wifi.sleeptype "
-/*20150701*/"ws2801.write ws2801.init "
+"ws2801.write ws2801.init "
 "ws2812.writergb ws2812.write",
 //Library constants
 "coap.CON coap.NON "
 "dht.OK dht.ERROR_CHECKSUM dht.ERROR_TIMEOUT "
 "gpio.INT gpio.OUTPUT gpio.INPUT gpio.HIGH gpio.LOW gpio.FLOAT gpio.PULLUP "
 "i2c.SLOW i2c.TRANSMITTER i2c.RECEIVER "
-"u8g.DRAW_UPPER_RIGHT u8g.DRAW_UPPER_LEFT u8g.DRAW_LOWER_RIGHT u8g.DRAW_LOWER_LEFT u8g.DRAW_ALL u8g.MODE_BW u8g.MODE_GRAY2BIT "
 "net.TCP net.UDP "
 "node.CPU80MHZ node.CPU160MHZ "
 "spi.MASTER spi.SLAVE spi.CPHA_LOW spi.CPHA_HIGH spi.CPOL_LOW spi.CPOL_HIGH spi.DATABITS_8 spi.DATABITS_16 "
 "tmr.ALARM_SINGLE tmr.ALARM_SEMI tmr.ALARM_AUTO "
+"u8g.DRAW_UPPER_RIGHT u8g.DRAW_UPPER_LEFT u8g.DRAW_LOWER_RIGHT u8g.DRAW_LOWER_LEFT u8g.DRAW_ALL u8g.MODE_BW u8g.MODE_GRAY2BIT "
 "wifi.STATION wifi.SOFTAP wifi.STATIONAP wifi.PHYMODE_B wifi.PHYMODE_G wifi.PHYMODE_N wifi.NONE_SLEEP wifi.LIGHT_SLEEP wifi.MODEM_SLEEP wifi.OPEN wifi.WPA_PSK wifi.WPA2_PSK wifi.WPA_WPA2_PSK",
 "", "", "", "", "" };
 
@@ -150,14 +155,14 @@ PEDITLEXER pLexArray[NUMLEXERS] =
 
 
 // Currently used lexer
-PEDITLEXER pLexCurrent = &lexDefault;
+PEDITLEXER pLexCurrent = &lexLUA;
 COLORREF crCustom[16];
 BOOL bUse2ndDefaultStyle;
 BOOL fStylesModified = FALSE;
 BOOL fWarnedNoIniFile = FALSE;
 BOOL fIsConsolasAvailable = FALSE;
 int iBaseFontSize = 10;
-int iDefaultLexer;
+int iDefaultLexer = 1;
 BOOL bAutoSelect;
 int cxStyleSelectDlg;
 int cyStyleSelectDlg;
@@ -215,7 +220,7 @@ void Style_Load()
   bUse2ndDefaultStyle = (IniSectionGetInt(pIniSection,L"Use2ndDefaultStyle",0)) ? 1 : 0;
 
   // default scheme
-  iDefaultLexer = IniSectionGetInt(pIniSection,L"DefaultScheme",0);
+  iDefaultLexer = IniSectionGetInt(pIniSection,L"DefaultScheme",1);
   iDefaultLexer = min(max(iDefaultLexer,0),NUMLEXERS-1);
 
   // auto select
